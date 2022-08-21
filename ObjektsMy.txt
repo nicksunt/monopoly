@@ -1,0 +1,79 @@
+public class ObjectsMy {
+
+    City city0 = new City("Вперед (начальное)", 0, 0, 0);//
+    City city1 = new City("Москва", 200, 2400, 600);
+    City city2 = new City("Рязань", 180, 2200, 550);
+    City city3 = new City("Ростов-на-дону", 180, 2200, 550);
+    City city4 = new City("Екатеринбург", 500, 4000, 280);
+    City city5 = new City("Ломбард", 0, 0, 0);//
+    City city6 = new City("Пермь", 350, 3500, 240);
+    City city7 = new City("Архангельск", 40, 600, 500);
+    City city8 = new City("Новосибирск", 240, 2600, 950);
+    City city9 = new City("Москва слезам не верит ", 0, 0, 0);//
+    City city10 = new City("Обнинск", 220, 2400, 750);
+    City city11 = new City("Челябинск", 100, 1400, 450);
+    City city12 = new City("Барнаул", 100, 1400, 450);
+    City city13 = new City("Псков ", 120, 1600, 500);
+    City city14 = new City("Батайск", 140, 140, 450);
+    City city15 = new City("Воронеж ", 140, 1800, 450);
+    City city16 = new City("Сыктывкар", 160, 2000, 500);
+    City city17 = new City("Санкт-Петербург ", 130, 1000, 260);
+    City city18 = new City("Красноярск ", 100, 1120, 360);
+
+    Player player0 = new Player(0, 15000);
+    Player player1 = new Player(0, 15000);
+    Player player2 = new Player(0, 15000);
+    Player player3 = new Player(0, 15000);
+    Player player4 = new Player(0, 15000);
+
+    Player[] allPlayers = new Player[5];
+
+    City[] cityArray = new City[19];
+
+    public void mass() {
+
+        cityArray[0] = city0;
+        cityArray[1] = city1;
+        cityArray[2] = city2;
+        cityArray[3] = city3;
+        cityArray[4] = city4;
+        cityArray[5] = city5;
+        cityArray[6] = city6;
+        cityArray[7] = city7;
+        cityArray[8] = city8;
+        cityArray[9] = city9;
+        cityArray[10] = city10;
+        cityArray[11] = city11;
+        cityArray[12] = city12;
+        cityArray[13] = city13;
+        cityArray[14] = city14;
+        cityArray[15] = city15;
+        cityArray[16] = city16;
+        cityArray[17] = city17;
+        cityArray[18] = city18;
+
+        allPlayers[0] = player0;
+        allPlayers[1] = player1;
+        allPlayers[2] = player2;
+        allPlayers[3] = player3;
+        allPlayers[4] = player4;
+
+    }
+
+    public void infoForPlayer(Player player) {
+        System.out.println("Информация игрока " + player.name + ": баланс:" + player.balans + " поле игрока: " + cityArray[player.fieldPlayer].name);
+        for (int namberCityOfMass = 0; namberCityOfMass < player.massCity.size(); namberCityOfMass++) {
+            System.out.println("Коммуникации игрока : " + player.massCity.get(namberCityOfMass).name + " ");
+        }
+    }
+
+    public void infoForField(City j) {
+        System.out.println("Информация о поле " + j.name + " : цена:" + j.money + ", рента с поля: " + j.renta);
+    }
+}
+
+
+
+
+
+

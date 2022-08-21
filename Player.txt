@@ -1,0 +1,14 @@
+import java.util.ArrayList;
+
+public class Player {
+    String name;
+    int fieldPlayer;
+    int balans;
+    ArrayList<City> massCity = new ArrayList<>();
+    int intForHome = 0;
+
+    public Player(int fieldPlayer, int balans) {
+        this.fieldPlayer = fieldPlayer;
+        this.balans = balans;
+    }
+}

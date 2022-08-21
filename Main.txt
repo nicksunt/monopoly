@@ -1,0 +1,140 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) throws InterruptedException {
+        ObjectsMy ob = new ObjectsMy();
+        ob.mass();
+
+        ArrayList<Player> playersReal = new ArrayList<>();
+
+            System.out.println(q); //returns an integer
+        System.out.println("При любом вопосе принимаются ответы только: да или нет");
+        Thread.sleep(1000);
+        for (int i = 0; i < 5; i++) {
+            System.out.println("Напишите имя одного из участников игры (количество участников не должно привышать пяти), если-же игроков больше нету, напишие слово: нет ");
+            Scanner scanner = new Scanner(System.in);
+            String nameOfRealPlayers = scanner.nextLine();
+            if (!nameOfRealPlayers.equals("нет")) {
+                playersReal.add(ob.allPlayers[i]);
+                playersReal.get(i).name = nameOfRealPlayers;
+            } else {
+                break;
+            }
+        }
+        System.out.println("Игра началась!");
+        Thread.sleep(500);
+        int namberOfPlayers = 0;
+        while (playersReal.size() != 1) {
+            System.out.println(" ");
+            System.out.println("Сейчас ход игрока с именем: " + playersReal.get(namberOfPlayers).name);
+            System.out.println("Напишите слово: инфа для выдачи информации про вас, если же она вам не нужна нажмите Enter что бы кинуть кубик");
+            Scanner scanner3 = new Scanner(System.in);
+            String i = scanner3.nextLine();
+            if (i.equals("инфа")) {
+                ob.infoForPlayer(playersReal.get(namberOfPlayers));
+            }
+            Thread.sleep(500);
+            int randomKyb = 0;
+            randomKyb = (int) (Math.random() * 7);
+            if (randomKyb == 0) {
+                while (randomKyb == 0) {
+                    randomKyb = (int) (Math.random() * 7);
+                }
+            }
+            playersReal.get(namberOfPlayers).fieldPlayer = playersReal.get(namberOfPlayers).fieldPlayer + randomKyb;
+            System.out.println("* Вы кинули кубик и... *");
+            Thread.sleep(1000);
+            System.out.println(" ");
+            System.out.println("Игроку под именем " + playersReal.get(namberOfPlayers).name + " выпало число - " + randomKyb);
+            if (playersReal.get(namberOfPlayers).fieldPlayer >= ob.cityArray.length) {
+                playersReal.get(namberOfPlayers).fieldPlayer = playersReal.get(namberOfPlayers).fieldPlayer - ob.cityArray.length;
+                playersReal.get(namberOfPlayers).balans = playersReal.get(namberOfPlayers).balans + 2000;
+                System.out.println("Вы прошли круг, вам начислено 2000, теперь ваш баланс состовляет: " + playersReal.get(namberOfPlayers).balans);
+                //////////////// обнаружен баг
+            }
+            switch (playersReal.get(namberOfPlayers).fieldPlayer) {
+                case 0:
+                    System.out.println("Вы попали на поле : " + ob.cityArray[playersReal.get(namberOfPlayers).fieldPlayer].name);
+                    System.out.println(" ");
+                    Thread.sleep(3000);
+                    break;
+                case 5://спросить у папы как подождать пять секунд
+                    playersReal.get(namberOfPlayers).balans = playersReal.get(namberOfPlayers).balans - 2000;
+                    System.out.println("Вы попали на поле : " + ob.cityArray[playersReal.get(namberOfPlayers).fieldPlayer].name + " (Вас поймали при попытке сдать фальшивое золото) С вашего баланса снято 2000, Теперь ваш баланс составляет: " + playersReal.get(namberOfPlayers).balans);
+                    System.out.println(" ");
+                    Thread.sleep(5000);
+
+                    break;
+
+                case 9:
+                    System.out.println(ob.cityArray[playersReal.get(namberOfPlayers).fieldPlayer].name);
+                    playersReal.get(namberOfPlayers).fieldPlayer = 1;
+                    System.out.println("Вы возвращены на поле москва, теперь это ваш город!");
+                    playersReal.get(namberOfPlayers).massCity.add(ob.cityArray[1]);
+                    Thread.sleep(2000);
+                    break;
+                default:
+
+                    ob.infoForField(ob.cityArray[playersReal.get(namberOfPlayers).fieldPlayer]);
+                    if (playersReal.get(namberOfPlayers).balans >= ob.cityArray[playersReal.get(namberOfPlayers).fieldPlayer].money) {
+                        if (ob.cityArray[playersReal.get(namberOfPlayers).fieldPlayer].buy == null) {
+                            System.out.println("Хотите ли вы приобрести город : " + ob.cityArray[playersReal.get(namberOfPlayers).fieldPlayer].name + " за: " + ob.cityArray[playersReal.get(namberOfPlayers).fieldPlayer].money);
+                            Scanner scanner1 = new Scanner(System.in);
+                            String BuyOrNo = scanner1.nextLine();
+                            if (BuyOrNo.equals("да")) {
+                                ob.cityArray[playersReal.get(namberOfPlayers).fieldPlayer].buy = true;
+                                playersReal.get(namberOfPlayers).massCity.add(ob.cityArray[playersReal.get(namberOfPlayers).fieldPlayer]);
+                                ob.cityArray[playersReal.get(namberOfPlayers).fieldPlayer].playerBuy = playersReal.get(namberOfPlayers);
+                                ob.cityArray[playersReal.get(namberOfPlayers).fieldPlayer].playerBuy.balans = ob.cityArray[playersReal.get(namberOfPlayers).fieldPlayer].playerBuy.balans - ob.cityArray[playersReal.get(namberOfPlayers).fieldPlayer].money;
+                                System.out.println("Вы приобрели город : " + ob.cityArray[playersReal.get(namberOfPlayers).fieldPlayer].name);
+                                System.out.println(" ");
+                                break;
+                            }
+                        } else {
+                            if (ob.cityArray[playersReal.get(namberOfPlayers).fieldPlayer].playerBuy == playersReal.get(namberOfPlayers)) {
+                                break;
+                            }
+                        }
+
+                        playersReal.get(namberOfPlayers).balans = playersReal.get(namberOfPlayers).balans - ob.cityArray[playersReal.get(namberOfPlayers).fieldPlayer].renta;
+                        System.out.print("С вашего балнса снято " + ob.cityArray[playersReal.get(namberOfPlayers).fieldPlayer].renta);
+                        ob.cityArray[playersReal.get(namberOfPlayers).fieldPlayer].playerBuy.balans = ob.cityArray[playersReal.get(namberOfPlayers).fieldPlayer].playerBuy.balans + ob.cityArray[playersReal.get(namberOfPlayers).fieldPlayer].renta;
+                        System.out.println(" и положено на баланс игрока под именем: " + ob.cityArray[playersReal.get(namberOfPlayers).fieldPlayer].playerBuy.name);
+                        break;
+                    }
+            }
+
+            if (playersReal.get(namberOfPlayers).balans < 0) {
+                System.out.println("Игрок: " + playersReal.get(namberOfPlayers).name + " - банкрот, соответственно он и выбывает");
+                playersReal.remove(namberOfPlayers);
+                namberOfPlayers--;
+            }
+            if (playersReal.get(namberOfPlayers).massCity.size() > 1 & playersReal.get(namberOfPlayers).intForHome % 5 == 0) {
+                int randomHome;
+                randomHome = (int) (Math.random() * playersReal.get(namberOfPlayers).massCity.size());
+                System.out.println("Хотите ли вы приобрести дом на поле: " + playersReal.get(namberOfPlayers).massCity.get(randomHome).name + " за: " + playersReal.get(namberOfPlayers).massCity.get(randomHome).moneyForHome + "(он прибавляет 350 к ренте поля)");
+                Scanner scanner4 = new Scanner(System.in);
+                String j = scanner4.nextLine();
+                if (j.equals("да")) {
+                    playersReal.get(namberOfPlayers).balans = playersReal.get(namberOfPlayers).balans - playersReal.get(namberOfPlayers).massCity.get(randomHome).moneyForHome;
+                    ob.cityArray[playersReal.get(namberOfPlayers).fieldPlayer].renta = playersReal.get(namberOfPlayers).massCity.get(randomHome).renta + 350;
+                    System.out.println("Вы поставили дом на поле: " + playersReal.get(namberOfPlayers).massCity.get(randomHome).name + " теперь рента с него увеличится!");
+                }
+            }
+
+            namberOfPlayers = namberOfPlayers + 1;
+            if (namberOfPlayers == playersReal.size()) {
+                namberOfPlayers = 0;
+            }
+            playersReal.get(namberOfPlayers).intForHome++;
+        }
+
+        System.out.println("Игра окончена,победитель игры: " + playersReal.get(0).name);
+    }
+}
+
+
+
+
+

@@ -1,0 +1,19 @@
+public class City {
+    String name;
+    int renta;
+    int money;
+    // String color;
+    Boolean buy;
+    Player playerBuy;
+    int moneyForHome;
+
+    public City() {
+    }
+
+    public City(String name, int renta, int money, int moneyForHome) {
+        this.name = name;
+        this.renta = renta;
+        this.money = money;
+        this.moneyForHome = moneyForHome;
+    }
+}
